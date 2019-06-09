@@ -1,4 +1,4 @@
-# Express Boilerplate!
+# Express Boilerplate — Exciting! 
 
 This is a boilerplate project for new Express projects.
 
