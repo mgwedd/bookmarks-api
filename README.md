@@ -1,17 +1,10 @@
-# Express Boilerplate — Exciting! 
-
-This is a boilerplate project for new Express projects.
+# Bookmarks API Server
 
 ## Set up
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+You will need to configure the Bookmarks client to properly interact with this server. For example, it will need to access the correct port on localhost, or, if you deploye to Heroku, it will need to point there. You will also need to take care that the Bookmarks client uses the UUID API Token set on the server. One is given in config.js for testing, so just use that in the Auth header of the requests the Bookmarks client sends. 
 
-1. Clone this repository to local: `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm i`
-5. Move the example Environment file `example.env` to `.env`, which will be ignored by git and read by the express server `mv example.env .env`. Adjust those environment variables as needed.
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Happy Bookmarking!
 
 ## Scripts
 

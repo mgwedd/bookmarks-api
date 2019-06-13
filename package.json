@@ -7,8 +7,8 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "debug": "ndb src/server.js",
-    "test": "mocha --require test/setup.js", 
-    "predeploy": "npm audit", 
+    "test": "mocha --require test/setup.js",
+    "predeploy": "npm audit",
     "deploy": "git push heroku master"
   },
   "keywords": [],
@@ -26,6 +26,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "helmet": "^3.18.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1"
   }
 }

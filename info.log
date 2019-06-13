@@ -1,0 +1,25 @@
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Bookmark with id f743c4a9-53d2-42f2-8845-b637cf687e88 created","level":"info"}
+{"message":"Bookmark with id f743c4a9-53d2-42f2-8845-b637cf687e88 not found","level":"error"}
+{"message":"Bookmark with id 3cf18b26-50de-4a2c-81eb-fc3578d67565 not found","level":"error"}
+{"message":"Bookmark with id 3cf18b26-50de-4a2c-81eb-fc3578d67565 not found","level":"error"}
+{"message":"URL is required","level":"error"}
+{"message":"Description is required","level":"error"}
+{"message":"Description is required","level":"error"}
+{"message":"Bookmark with id f2e629a7-b4ca-4fb0-b91b-8901990316b2 not found","level":"error"}
+{"message":"Bookmark with id c979659f-f83a-4b08-bdcb-3b9f691b08a4 not found","level":"error"}
+{"message":"Bookmark with id c979659f-f83a-4b08-bdcb-3b9f691b08a4 not found","level":"error"}
+{"message":"Bookmark with id 6e529044-d5ee-4c18-8c13-c81e88920b24 not found","level":"error"}
+{"message":"Bookmark with id a0f58e27-1966-4840-82ae-fe6240dc42b5 not found","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/a0f58e27-1966-4840-82ae-fe6240dc42b5","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/a0f58e27-1966-4840-82ae-fe6240dc42b5","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/a0f58e27-1966-4840-82ae-fe6240dc42b5","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks/","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
+{"message":"Unauthorized request to path: /bookmarks","level":"error"}
