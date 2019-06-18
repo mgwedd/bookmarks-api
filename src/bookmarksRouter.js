@@ -69,7 +69,7 @@ bookmarksRouter
             .then(bookmark => {
                 if (!bookmark) {
                     return res.status(422).json({
-                    error: { message: `Unable to create bookmark` }
+                        error: { message: `Unable to create bookmark` }
                     });
                 }
                 res
@@ -88,13 +88,14 @@ bookmarksRouter
     .route('/bookmarks/:id')
 
     .get((req, res, next) => {
-        const { requestedId } = req.params;
+        const { id } = req.params;
         const knexInstance = req.app.get('db');
+        console.log(id)
 
-        BookmarksService.getBookmarkById(knexInstance, requestedId)
+        BookmarksService.getBookmarkById(knexInstance, id)
             .then(bookmark => {
                 if (!bookmark) {
-                    logger.error(`Bookmark with id "${requestedId}" not found`);
+                    logger.error(`Bookmark with id "${id}" not found`);
                     return res
                         .status(404)
                         .send(`Bookmark not found`);
