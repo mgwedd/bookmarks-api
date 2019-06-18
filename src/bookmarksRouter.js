@@ -83,46 +83,26 @@ bookmarksRouter
 // *+*+*+*+*+**+*+*+*+*+**+*+*+*+*+**+*+*
 // *+*+*+*+*+* DYNAMIC ROUTES *+*+*+*+*+* 
 // *+*+*+*+*+*  GET & DELETE *+*+*+*+**+*
-// bookmarksRouter
+bookmarksRouter
 
-//     .route('/bookmark/:id')
+    .route('/bookmarks/:id')
 
-//     .get((req, res) => {
-//         const { id } = req.params
+    .get((req, res, next) => {
+        const { requestedId } = req.params;
+        const knexInstance = req.app.get('db');
 
-//         const bookmark = bookmarks.find(bookmark => bookmark.id === id)
-
-//         // is there a bookmark with the requested ID? If not, return 404.
-//         if (!bookmark) {
-//             logger.error(`Bookmark with id ${id} not found`)
-//             return res
-//                 .status(404)
-//                 .send(`Bookmark not found`)
-//         }
-
-//         res
-//             .json(bookmark)
-//     })
-
-//     .delete((req, res) => {
-
-//         const { id } = req.params
-//         const bookmark = bookmarks.find(bookmark => bookmark.id === id)
-//         const bookmarkIndex = bookmarks.indexOf(bookmark)
-
-//         if (bookmarkIndex === -1) {
-//             logger.error(`Bookmark with id ${id} not found`)
-//             return res
-//                 .status(404)
-//                 .send('Bookmark not found')
-//         }
-
-//         logger.error(`Bookmark with id ${id} not found`)
-//         bookmarks.slice(bookmarkIndex, 1)
-
-//         res
-//             .status(204)
-//             .send('Bookmark deleted')
-//     })
+        BookmarksService.getBookmarkById(knexInstance, requestedId)
+            .then(bookmark => {
+                if (!bookmark) {
+                    logger.error(`Bookmark with id "${requestedId}" not found`);
+                    return res
+                        .status(404)
+                        .send(`Bookmark not found`);
+                }
+                res
+                    .json(bookmark)
+            })
+            .catch(next)
+    });
 
 module.exports = bookmarksRouter;
