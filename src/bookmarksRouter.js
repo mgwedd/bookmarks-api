@@ -1,14 +1,23 @@
 const express = require('express');
-const bookmarksRouter = express.Router();
 const bodyParser = express.json();
 const logger = require('./logger');
+const xss = require('xss');
+const BookmarksRouter = express.Router();
 const BookmarksService = require('./BookmarksService');
+
+const serializeBookmark = bookmark => ({
+    id: bookmark.id,
+    title: bookmark.title,
+    url: xss(bookmark.url),
+    description: xss(bookmark.description),
+    rating: bookmark.rating,
+});
 
 // *+*+*+*+*+**+*+*+*+*+**+*+*+*+*+**+*+
 // *+*+*+*+*+* STATIC ROUTES *+*+*+*+*+*
 // *+*+*+*+*+*  GET & POST *+*+*+*+**+*+
 
-bookmarksRouter
+BookmarksRouter
 
     .route('/bookmarks')
     
@@ -26,41 +35,23 @@ bookmarksRouter
         
         // Parse and validate the bookmark data the client wants to POST.
         const { title, url, description, rating } = req.body;
+        const requiredFields = [title, url, description, rating];
 
-        if (!title) {
-            logger.error(`Title is required`);
-            return res
-                .status(400)
-                .send('Invalid data');
-        }
-            
-        if (!url) {
-            logger.error(`URL is required`);
-            return res
-                .status(400)
-                .send('Invalid data');
-        }
+        requiredFields.forEach( (field) => {
+            if (!field) {
+                logger.error(`${field} is required`);
+                return res
+                    .status(400)
+                    .send('Invalid submission');
+            }
+        });
 
-        if (!description) {
-            logger.error(`Description is required`);
-            return res
-                .status(400)
-                .send('Invalid data');
-        }
-        
-        if (!rating) {
-            logger.error(`Rating is required`);
-            return res
-                .status(400)
-                .send('Invalid data');
-        }
-    
-        const newBookmark = {
+        const newBookmark = serializeBookmark({
             title,
             url,
             description, 
             rating
-        }
+        });
         
         // POST the new bookmark to the database.
         const knexInstance = req.app.get('db');
@@ -68,14 +59,16 @@ bookmarksRouter
         BookmarksService.insertBookmark(knexInstance, newBookmark)
             .then(bookmark => {
                 if (!bookmark) {
+                    logger.error(`Failed to insert ${newBookmark} into db`)
                     return res.status(422).json({
                         error: { message: `Unable to create bookmark` }
                     });
                 }
+
                 res
                     .status(201)
                     .location(`http://localhost:8000/bookmark/${bookmark.id}`)
-                    .json(bookmark);
+                    .json(serializeBookmark(bookmark));
             })
             .catch(next);
     });
@@ -83,14 +76,13 @@ bookmarksRouter
 // *+*+*+*+*+**+*+*+*+*+**+*+*+*+*+**+*+*
 // *+*+*+*+*+* DYNAMIC ROUTES *+*+*+*+*+* 
 // *+*+*+*+*+*  GET & DELETE *+*+*+*+**+*
-bookmarksRouter
+BookmarksRouter
 
     .route('/bookmarks/:id')
 
     .get((req, res, next) => {
         const { id } = req.params;
         const knexInstance = req.app.get('db');
-        console.log(id)
 
         BookmarksService.getBookmarkById(knexInstance, id)
             .then(bookmark => {
@@ -101,9 +93,21 @@ bookmarksRouter
                         .send(`Bookmark not found`);
                 }
                 res
-                    .json(bookmark)
+                    .json(serializeBookmark(bookmark))
             })
             .catch(next)
+    })
+
+    .delete((req, res, next) => {
+        BookmarksService.deleteBookmark(
+          req.app.get('db'),
+          req.params.id
+        )
+          .then(numRowsAffected => {
+            res.json(`Bookmark deleted successfully.`)
+            res.status(204).end()
+          })
+          .catch(next)
     });
 
-module.exports = bookmarksRouter;
+module.exports = BookmarksRouter;

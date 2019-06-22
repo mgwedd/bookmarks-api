@@ -13,21 +13,21 @@ const BookmarksService = {
                 return rows[0];
             });
     },
-    getBookmarkById(knex, requestedId) {
+    getBookmarkById(knex, id) {
         return knex
             .select('*')
             .from('bookmarks')
-            .where('id', requestedId)
+            .where({ id })
             .first();
     },
-    deleteBookmark(knex, requestedId) {
+    deleteBookmark(knex, id) {
         return knex('bookmarks')
-            .where({requestedId})
+            .where({ id })
             .delete();
     },
     updateBookmark(knex, id, newBookmarkFields) {
         return knex('bookmarks')
-            .where({id})
+            .where({ id })
             .update(newBookmarkFields);
     }
 }

@@ -1,5 +1,4 @@
 const app = require( '../src/app' )
-const STORE = require('../bookmarks')
 
 // make sure to change the API_TOKEN if you change it in config!
 describe('Bookmarks API Server', () => {
@@ -11,29 +10,7 @@ describe('Bookmarks API Server', () => {
       .set('Authorization', 'Bearer d9e40555-bbc2-4404-a7a0-a506d6ac88a4') 
       .expect(200)
       .then((res) => {
-        expect(res.body).to.eql(STORE)
-      })
-  })
-
-  it('POST /bookmarks respond OK with an object', () => {
-
-    return supertest(app)
-      .post('/bookmarks')
-      .set('Authorization', 'Bearer d9e40555-bbc2-4404-a7a0-a506d6ac88a4') 
-      .set('Content-Type', 'application/json')
-      .send({
-        "title": "TEST BOOKMARK TITLE", 
-        "description": "TEST DESCRIPTION", 
-        "url": "www.test.com", 
-        "rating": "5"
-      })
-      .expect(201)
-      .then((res) => {
-        expect(res.body).to.have.property('id')
-        expect(res.body).to.have.property('title')
-        expect(res.body).to.have.property('url')
-        expect(res.body).to.have.property('description')
-        expect(res.body).to.have.property('rating')
+        expect(res.body).to.be.an('Array').lengthOf()
       })
   })
 
@@ -51,14 +28,35 @@ describe('Bookmarks API Server', () => {
           "description": "Leverege is an IoT Solutiosn and Platform Provider", 
           "rating": "4"
         })
-    });
+      })
   })
 
-  // it('DELETE /bookmarks/:id should respond OK with at array of length 1 -- one bookmark, with an id that matches the one requested', () => {
-    
-  //   return supertest(app)
-  //     .delete('/bookmarks/6e44b5b9-d1b5-4f33-8fbe-e52ddfa10b7c')
-  //     .set('Authorization', 'Bearer c649e8e0-de86-44bc-bf66-57a247ca0413') 
-  //     .expect(204)
-  // })
-})
+    it('POST /bookmarks respond OK with an object', () => {
+      return supertest(app)
+        .post('/bookmarks')
+        .set('Authorization', 'Bearer d9e40555-bbc2-4404-a7a0-a506d6ac88a4') 
+        .set('Content-Type', 'application/json')
+        .send({
+          "title": "TEST BOOKMARK TITLE", 
+          "description": "TEST BOOKMARK DESCRIPTION", 
+          "url": "www.test.com", 
+          "rating": 5
+        })
+        .expect(201)
+        .then((res) => {
+          expect(res.body).to.have.property('id')
+          expect(res.body).to.have.property('title')
+          expect(res.body).to.have.property('url')
+          expect(res.body).to.have.property('description')
+          expect(res.body).to.have.property('rating')
+        })
+    })
+});
+
+// it('DELETE /bookmarks/:id should respond OK with at array of length 1 -- one bookmark, with an id that matches the one requested', () => {
+
+//   return supertest(app)
+//     .delete('/bookmarks/6e44b5b9-d1b5-4f33-8fbe-e52ddfa10b7c')
+//     .set('Authorization', 'Bearer c649e8e0-de86-44bc-bf66-57a247ca0413') 
+//     .expect(204)
+// 
