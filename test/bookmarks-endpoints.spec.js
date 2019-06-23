@@ -29,31 +29,40 @@ describe('Bookmarks endpoints', () => {
                 .insert(testBookmarks)
         })
 
-        it('Responds with 401 Unauthorized for GET /bookmarks by default', () => {
+        it('Responds with 401 Unauthorized for GET /bookmark by default', () => {
             return supertest(app)
-                .get('/bookmarks')
+                .get('/bookmark')
                 .expect(401, {error : 'Unauthorized Request'})
         })
 
-        it('Responds with 401 Unauthorized for POST /bookmarks by default', () => {
+        it('Responds with 401 Unauthorized for POST /bookmark by default', () => {
             return supertest(app)
-                .post('/bookmarks')
+                .post('/bookmark')
                 .send({title : 'test-title', url : 'www.test.com', rating : 1})
                 .expect(401, { error: 'Unauthorized request' })
         })
 
-        it('Responds with 401 Unauthorized for GET /bookmarks/:id by default', () => {
+        it('Responds with 401 Unauthorized for GET /bookmark/:id by default', () => {
             const secondBookmark = testBookmarks[1]
             return supertest(app)
-                .get(`/bookmarks/${secondBookmark.id}`)
+                .get(`/bookmark/${secondBookmark.id}`)
                 .expect(401, { error : 'Unauthorized Request'})
         })
 
-        it('Responds with 401 Unauthorized for DELETE /bookmarks/:id by default', () => {
+        it('Responds with 401 Unauthorized for DELETE /bookmark/:id by default', () => {
             const aBookmark = testBookmarks[1]
             return supertest(app)
-                .delete(`/bookmarks/${aBookmark.id}`)
+                .delete(`/bookmark/${aBookmark.id}`)
+                .expect(401, { error : 'Unauthorized request'})
+        })
+
+
+        it('Responds with 401 Unauthorized for PATCH /bookmark/:id by default', () => {
+            const aBookmark = testBookmarks[1]
+            return supertest(app)
+                .update(`/bookmark/${aBookmark.id}`)
                 .expect(401, { error : 'Unauthorized request'})
         })
     })
+
 });
